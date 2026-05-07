@@ -1,5 +1,5 @@
 /*!
- * Copyright 2022 WPPConnect Team
+ * Copyright 2026 KT AI
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-export * from './checkUpdate';
-export * as constants from './constants';
-export * from './fetchCurrentAlphaVersion';
-export * from './fetchCurrentBetaVersion';
-export * from './fetchCurrentVersion';
-export * from './fetchLatest';
-export * from './fetchLatestZh';
-export * from './fetchLatestBeta';
-export * from './getAvailableVersions';
-export * from './getLatestVersion';
-export * from './fetchLatestAlpha';
-export * from './fetchLatestAlphaZh';
-export * from './getPageContent';
-export * from './getVersionInfo';
+import fetch from 'node-fetch';
+import { WA_URL, WA_USER_AGENT } from './constants';
+
+export async function fetchLatestAlphaZh(): Promise<string> {
+  const response = await fetch(`${WA_URL}`, {
+    headers: {
+      'user-agent': WA_USER_AGENT,
+      'accept-language': 'zh-CN,zh;q=1,en;q=0.8',
+      'sec-fetch-mode': 'navigate',
+      cookie: 'wa_lang_pref=zh_CN; wa_web_lang_pref=zh_CN; wa_build=c',
+      pragma: 'no-cache',
+      'cache-control': 'no-cache',
+    },
+  });
+
+  return await response.text();
+}

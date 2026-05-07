@@ -1,4 +1,4 @@
-# WPPConnect/WA-Version
+# KT WA Version
 
 [![npm version](https://img.shields.io/npm/v/@wppconnect/wa-version.svg?color=green)](https://www.npmjs.com/package/@wppconnect/wa-version)
 [![Downloads](https://img.shields.io/npm/dm/@wppconnect/wa-version.svg)](https://www.npmjs.com/package/@wppconnect/wa-version)
@@ -8,7 +8,32 @@
 [![Lint Status](https://img.shields.io/github/actions/workflow/status/wppconnect-team/wa-version/lint.yml?branch=main&label=lint)](https://github.com/wppconnect/wa-version/actions)
 [![release-it](https://img.shields.io/badge/%F0%9F%93%A6%F0%9F%9A%80-release--it-e10079.svg)](https://github.com/release-it/release-it)
 
-> WPPConnect/WA-Version is an open-source project to help WhatsApp Web navigation automation tools, making it possible to access older versions of the pages, thus allowing more time to adapt to the updates.
+> KT WA Version is based on the upstream WPPConnect/WA-Version project and is
+> used to continuously capture the latest WhatsApp Web HTML snapshots for KT
+> usage.
+
+## Scope
+
+- Track the latest WhatsApp Web version only
+- Capture and store HTML variants for:
+  - `en_US`
+  - `zh_CN`
+- Store generated HTML files directly in this repository
+
+## File Layout
+
+Generated files are stored in the upstream-compatible `html/` directory:
+
+- `html/<version>.html`: default snapshot, currently mapped to `en_US`
+- `html/<version>.en_US.html`: English snapshot
+- `html/<version>.zh_CN.html`: Chinese snapshot
+
+The upstream `versions.json` file is kept and updated as the version index.
+
+## Update Job
+
+This repository is intended to run through GitHub Actions on an hourly schedule
+to discover and persist the latest version snapshots.
 
 ## Our online channels
 

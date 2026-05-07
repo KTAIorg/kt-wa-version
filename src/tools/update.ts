@@ -23,7 +23,9 @@ import { HTML_DIR, VERSIONS_FILE } from '../constants';
 import { fetchCurrentAlphaVersion } from '../fetchCurrentAlphaVersion';
 import { fetchCurrentBetaVersion } from '../fetchCurrentBetaVersion';
 import { fetchLatest } from '../fetchLatest';
+import { fetchLatestZh } from '../fetchLatestZh';
 import { fetchLatestAlpha } from '../fetchLatestAlpha';
+import { fetchLatestAlphaZh } from '../fetchLatestAlphaZh';
 import { fetchLatestBeta } from '../fetchLatestBeta';
 import { getAvailableVersions } from '../getAvailableVersions';
 import { getVersionInfo } from '../getVersionInfo';
@@ -44,6 +46,34 @@ const runCommit =
 
 function getVersionPath(version: string) {
   return path.join(HTML_DIR, `${version}.html`);
+}
+
+function getVersionLocalePath(version: string, locale: string) {
+  return path.join(HTML_DIR, `${version}.${locale}.html`);
+}
+
+async function writeLocaleFiles(
+  version: string,
+  englishHtml: string,
+  chineseHtml: string
+) {
+  await fs.promises.writeFile(getVersionPath(version), englishHtml, {
+    encoding: 'utf8',
+  });
+  await fs.promises.writeFile(
+    getVersionLocalePath(version, 'en_US'),
+    englishHtml,
+    {
+      encoding: 'utf8',
+    }
+  );
+  await fs.promises.writeFile(
+    getVersionLocalePath(version, 'zh_CN'),
+    chineseHtml,
+    {
+      encoding: 'utf8',
+    }
+  );
 }
 
 function setGitHubState(key: string, value: any) {
@@ -126,20 +156,20 @@ async function updateLatest() {
   const functions = [fetchLatest, fetchLatestBeta];
 
   for (const func of functions) {
-    const html = await func();
+    const englishHtml = await func();
 
     let version: string | null = null;
 
     // Get the version inside of WhatsApp page
     const versionRE = /\w+="(2\.\d+\.\d+)"|manifest-(2\.\d+\.\d+)\.json/;
-    const matches = versionRE.exec(html);
+    const matches = versionRE.exec(englishHtml);
 
     if (matches) {
       version = matches.slice(1).find((m) => !!m) || null;
 
       // Check is beta
       const isBetaRE = /x-wa-beta="1"/;
-      if (isBetaRE.test(html)) {
+      if (isBetaRE.test(englishHtml)) {
         version += '-beta';
       }
     }
@@ -147,10 +177,9 @@ async function updateLatest() {
     if (version && !versions.includes(version)) {
       process.stderr.write(`New version available: ${version}\n`);
 
-      process.stderr.write(`Generating new file\n`);
-      await fs.promises.writeFile(getVersionPath(version), html, {
-        encoding: 'utf8',
-      });
+      process.stderr.write(`Generating locale files\n`);
+      const chineseHtml = await fetchLatestZh();
+      await writeLocaleFiles(version, englishHtml, chineseHtml);
       process.stderr.write(`Done\n`);
       return version;
     }
@@ -166,11 +195,10 @@ async function updateLatest() {
     if (!hasNewVersion) {
       process.stderr.write(`New version available: ${alphaVersion}\n`);
 
-      process.stderr.write(`Generating new file\n`);
-      const html = await fetchLatestAlpha();
-      await fs.promises.writeFile(getVersionPath(alphaVersion), html, {
-        encoding: 'utf8',
-      });
+      process.stderr.write(`Generating locale files\n`);
+      const englishHtml = await fetchLatestAlpha();
+      const chineseHtml = await fetchLatestAlphaZh();
+      await writeLocaleFiles(alphaVersion, englishHtml, chineseHtml);
       process.stderr.write(`Done\n`);
       return alphaVersion;
     }
@@ -276,18 +304,31 @@ async function run() {
 
     if (runCommit) {
       for (const version of outdated) {
-        await execa('git', ['rm', getVersionPath(version)]);
+        const files = [
+          getVersionPath(version),
+          getVersionLocalePath(version, 'en_US'),
+          getVersionLocalePath(version, 'zh_CN'),
+        ];
+        for (const file of files) {
+          if (fs.existsSync(file)) {
+            await execa('git', ['rm', file]);
+          }
+        }
         const { stdout } = await execa('git', [
           'commit',
           '-m',
           `fix: Removed outdated version: ${version}`,
-          getVersionPath(version),
         ]);
         process.stderr.write(`${stdout}\n`);
       }
 
       if (newVersion) {
-        await execa('git', ['add', getVersionPath(newVersion)]);
+        await execa('git', [
+          'add',
+          getVersionPath(newVersion),
+          getVersionLocalePath(newVersion, 'en_US'),
+          getVersionLocalePath(newVersion, 'zh_CN'),
+        ]);
         await execa('git', ['add', VERSIONS_FILE]);
 
         const { stdout } = await execa('git', [
@@ -295,6 +336,8 @@ async function run() {
           '-m',
           `fix: Added new version: ${newVersion}`,
           getVersionPath(newVersion),
+          getVersionLocalePath(newVersion, 'en_US'),
+          getVersionLocalePath(newVersion, 'zh_CN'),
           VERSIONS_FILE,
         ]);
         process.stderr.write(`${stdout}\n`);
