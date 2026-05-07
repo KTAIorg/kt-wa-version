@@ -304,15 +304,9 @@ async function run() {
 
     if (runCommit) {
       for (const version of outdated) {
-        const files = [
-          getVersionPath(version),
-          getVersionLocalePath(version, 'en_US'),
-          getVersionLocalePath(version, 'zh_CN'),
-        ];
-        for (const file of files) {
-          if (fs.existsSync(file)) {
-            await execa('git', ['rm', file]);
-          }
+        const file = getVersionPath(version);
+        if (fs.existsSync(file)) {
+          await execa('git', ['rm', file]);
         }
         const { stdout } = await execa('git', [
           'commit',

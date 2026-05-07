@@ -30,6 +30,7 @@ export function getAvailableVersions(
 ): string[] {
   const versions = fs
     .readdirSync(HTML_DIR)
+    .filter((c) => /^\d+\.\d+\.\d+(?:-(?:alpha|beta))?\.html$/.test(c))
     .map((c) => path.basename(c, '.html'));
 
   const sorted = semver.sort(versions);
