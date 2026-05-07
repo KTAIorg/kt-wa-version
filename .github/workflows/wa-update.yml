@@ -1,6 +1,7 @@
 name: wa-update
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - '*'
