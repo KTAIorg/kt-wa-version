@@ -1,3 +1,8 @@
+## <small>1.5.3881 (2026-05-08)</small>
+
+- fix: Added new version: 2.3000.1039056495-alpha ([9d08560](https://github.com/wppconnect-team/wa-version/commit/9d08560))
+- fix: ignore locale snapshots in version scan ([ee5e597](https://github.com/wppconnect-team/wa-version/commit/ee5e597))
+
 ## <small>1.5.3880 (2026-05-07)</small>
 
 - fix: Added new version: 2.3000.1039031798-alpha ([cdb5c48](https://github.com/wppconnect-team/wa-version/commit/cdb5c48))
