@@ -1,3 +1,8 @@
+## <small>1.5.3887 (2026-05-08)</small>
+
+- fix: Added new version: 2.3000.1039118178-alpha ([03d70f0](https://github.com/wppconnect-team/wa-version/commit/03d70f0))
+- chore: skip npm publish in publish workflow ([74a6f37](https://github.com/wppconnect-team/wa-version/commit/74a6f37))
+
 ## <small>1.5.3886 (2026-05-08)</small>
 
 - fix: Added new version: 2.3000.1039102240-alpha ([4a08983](https://github.com/wppconnect-team/wa-version/commit/4a08983))
