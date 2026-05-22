@@ -35,6 +35,10 @@ The upstream `versions.json` file is kept and updated as the version index.
 This repository is intended to run through GitHub Actions on an hourly schedule
 to discover and persist the latest version snapshots.
 
+## KT Design Docs
+
+- [WhatsApp 版本库与能力金丝雀设计](docs/version-registry-and-capability-canary.md)
+
 ## Our online channels
 
 [![Discord](https://img.shields.io/discord/844351092758413353?color=blueviolet&label=Discord&logo=discord&style=flat)](https://discord.gg/JU5JGGKGNG)
