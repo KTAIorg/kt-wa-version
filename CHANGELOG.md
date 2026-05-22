@@ -1,3 +1,8 @@
+## <small>1.5.3989 (2026-05-22)</small>
+
+- fix: Added new version: 2.3000.1039982100-alpha ([752a3e9](https://github.com/wppconnect-team/wa-version/commit/752a3e9))
+- docs: define wa version capability canary ([801cf9d](https://github.com/wppconnect-team/wa-version/commit/801cf9d))
+
 ## <small>1.5.3988 (2026-05-22)</small>
 
 - fix: Added new version: 2.3000.1039974632-alpha ([734d026](https://github.com/wppconnect-team/wa-version/commit/734d026))
