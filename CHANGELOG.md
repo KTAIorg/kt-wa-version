@@ -1,3 +1,8 @@
+## <small>1.5.4219 (2026-06-26)</small>
+
+- fix: Added new version: 2.3000.1042201107-alpha ([4aee06d](https://github.com/wppconnect-team/wa-version/commit/4aee06d))
+- chore: 移除冗余 auto-copilot-review workflow（改用组织原生自动审查） ([ed93aa2](https://github.com/wppconnect-team/wa-version/commit/ed93aa2))
+
 ## <small>1.5.4218 (2026-06-26)</small>
 
 - fix: Added new version: 2.3000.1042191713-alpha ([8857b74](https://github.com/wppconnect-team/wa-version/commit/8857b74))
