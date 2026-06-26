@@ -1,3 +1,9 @@
+## <small>1.5.4217 (2026-06-26)</small>
+
+- chore: Updated versions.json ([0fee2ff](https://github.com/wppconnect-team/wa-version/commit/0fee2ff))
+- fix: Removed outdated version: 2.3000.1038171008-alpha ([a624252](https://github.com/wppconnect-team/wa-version/commit/a624252))
+- ci: auto-request Copilot code review on new PRs ([2211a20](https://github.com/wppconnect-team/wa-version/commit/2211a20))
+
 ## <small>1.5.4216 (2026-06-26)</small>
 
 - fix: Added new version: 2.3000.1042184945-alpha ([d1a5ad8](https://github.com/wppconnect-team/wa-version/commit/d1a5ad8))
