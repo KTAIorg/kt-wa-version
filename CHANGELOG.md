@@ -1,3 +1,7 @@
+## <small>1.5.4288 (2026-07-08)</small>
+
+- fix: Added new version: 2.3000.1042821751-alpha ([ddac45b](https://github.com/wppconnect-team/wa-version/commit/ddac45b))
+
 ## <small>1.5.4287 (2026-07-08)</small>
 
 - chore: Updated versions.json ([5dbf42f](https://github.com/wppconnect-team/wa-version/commit/5dbf42f))
