@@ -1,7 +1,45 @@
 # GitLab CI：接入中心模板（规范集中在 KTAIorg/kt-gitlab-ci，勿在此复制作业）
-# 作业按仓库内容自激活：go.mod→Go、package.json→Node、Dockerfile→构建验证、全仓密钥扫描。
-# 仓库特有步骤：在本文件追加作业；通用规范改动请去模板仓库提 PR。
 include:
   - project: 'KTAIorg/kt-gitlab-ci'
     ref: v1
     file: '/templates/auto.gitlab-ci.yml'
+
+# 定时任务：WhatsApp Web 版本探测（原 .github/workflows/wa-update.yml，GitHub Actions 已停用）
+# 产物（commit/tag）写回 GitHub 权威源；镜像同步带回 GitLab。
+wa:update:
+  stage: test
+  image: node:24.15.0
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $SCHED_JOB == "wa-update"
+  variables:
+    GIT_DEPTH: "0"
+  timeout: 30m
+  script:
+    - git config --global user.name "kt-ops-bot"
+    - git config --global user.email "ops-bot@ktyun.cc"
+    - git remote set-url origin "https://x-access-token:${KT_GH_TOKEN}@github.com/KTAIorg/kt-wa-version.git"
+    - git fetch origin main && git checkout -B main origin/main
+    - npm ci || npm install
+    - chmod ug+x .husky/pre-commit || true
+    - export GITHUB_OUTPUT=/tmp/wa.out && touch "$GITHUB_OUTPUT"
+    - CI=true WA_COMMIT=true npm run wa-update
+    - |
+      out() { grep -E "^$1=" /tmp/wa.out | tail -1 | cut -d= -f2-; }
+      notify() {  # $1=color $2=title $3=desc；无 webhook 则仅日志
+        if [ -n "${DISCORD_WEBHOOK:-}" ]; then
+          curl -sf -X POST -H 'Content-Type: application/json' \
+            -d "{\"embeds\":[{\"color\":$1,\"title\":\"$2\",\"description\":\"$3\"}]}" \
+            "$DISCORD_WEBHOOK" >/dev/null || echo "discord notify failed"
+        else
+          echo "NOTIFY[$2] $3"
+        fi
+      }
+      if [ "$(out hasChanges)" = "true" ]; then
+        git status && git clean -fd
+        npm run release -- --ci -i patch
+      else
+        echo "no WhatsApp Web version changes"
+      fi
+      [ "$(out hasOutdated)" = "true" ] && notify 13312049 "Outdated WhatsApp WEB versions" "outdated: $(out outdated)"
+      [ "$(out hasNewVersion)" = "true" ] && notify 2664261 "New version for WhatsApp WEB!" "version: $(out version)"
+      true
