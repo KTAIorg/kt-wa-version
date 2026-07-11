@@ -1,0 +1,7 @@
+# GitLab CI：接入中心模板（规范集中在 KTAIorg/kt-gitlab-ci，勿在此复制作业）
+# 作业按仓库内容自激活：go.mod→Go、package.json→Node、Dockerfile→构建验证、全仓密钥扫描。
+# 仓库特有步骤：在本文件追加作业；通用规范改动请去模板仓库提 PR。
+include:
+  - project: 'KTAIorg/kt-gitlab-ci'
+    ref: v1
+    file: '/templates/auto.gitlab-ci.yml'
