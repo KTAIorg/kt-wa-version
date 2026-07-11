@@ -1,3 +1,11 @@
+## <small>1.5.4303 (2026-07-11)</small>
+
+- fix: Added new version: 2.3000.1043020865-alpha ([29440ac](https://github.com/wppconnect-team/wa-version/commit/29440ac))
+- fix: Removed outdated version: 2.3000.1039201455-alpha ([348ada6](https://github.com/wppconnect-team/wa-version/commit/348ada6))
+- fix: Removed outdated version: 2.3000.1039212651-alpha ([aa54490](https://github.com/wppconnect-team/wa-version/commit/aa54490))
+- ci(gitlab): 定时任务迁入 GitLab schedule（Actions 已停用）[skip ci] ([20b49f0](https://github.com/wppconnect-team/wa-version/commit/20b49f0))
+- ci(gitlab): 接入中心 CI 模板 v1 [skip ci] ([4d1c4c9](https://github.com/wppconnect-team/wa-version/commit/4d1c4c9))
+
 ## <small>1.5.4302 (2026-07-10)</small>
 
 - chore: Updated versions.json ([2746e15](https://github.com/wppconnect-team/wa-version/commit/2746e15))
