@@ -1,3 +1,4 @@
+# Action baseline: 2026-07-14, official GitHub releases (Node 24-compatible majors).
 name: wa-update
 
 on:
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.GH_PUSH_TOKEN }}
 
@@ -26,7 +27,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24.15.0
 
@@ -35,7 +36,7 @@ jobs:
         run: |
           echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
       - name: Setup npm cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ${{ steps.npm-cache.outputs.dir }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
