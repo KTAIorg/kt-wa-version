@@ -1,3 +1,7 @@
+## <small>1.5.4421 (2026-07-24)</small>
+
+- fix: Added new version: 2.3000.1043755002-alpha ([7f186e1](https://github.com/wppconnect-team/wa-version/commit/7f186e1))
+
 ## <small>1.5.4420 (2026-07-24)</small>
 
 - fix: Added new version: 2.3000.1043746978-alpha ([5d3bcf5](https://github.com/wppconnect-team/wa-version/commit/5d3bcf5))
