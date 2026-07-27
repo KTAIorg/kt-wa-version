@@ -6,6 +6,11 @@ include:
 
 # 定时任务：WhatsApp Web 版本探测（原 .github/workflows/wa-update.yml，GitHub Actions 已停用）
 # 产物（commit/tag）写回 GitHub 权威源；镜像同步带回 GitLab。
+#
+# 调度在 GitLab Project → Build → Pipeline schedules：
+#   variable SCHED_JOB=wa-update
+# 请将 cron 设为每天一次（例如 0 2 * * * UTC），不要每小时。
+# 本文件 rules 只认 schedule + SCHED_JOB，频率由 GitLab schedule 控制。
 wa:update:
   stage: test
   image: node:24.15.0
