@@ -8,8 +8,9 @@ on:
   pull_request:
     branches:
       - '*'
+  # 原每小时一次过于频繁；改为每天 UTC 02:00（约北京时间 10:00）
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 2 * * *'
 
 jobs:
   wa-update:
