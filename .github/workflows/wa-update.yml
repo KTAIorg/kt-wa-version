@@ -2,14 +2,12 @@ name: wa-update
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - '*'
-  pull_request:
-    branches:
-      - '*'
   schedule:
-    - cron: '0 * * * *'
+    - cron: "17 6 * * *"
+
+concurrency:
+  group: wa-update
+  cancel-in-progress: false
 
 jobs:
   wa-update:
