@@ -8,8 +8,13 @@
     "removeComments": false,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es5"
+    "target": "es5",
+    "rootDir": "src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/tools/**/*"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/tools/**/*"
+  ]
 }
